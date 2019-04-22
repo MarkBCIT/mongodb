@@ -4,16 +4,29 @@ $manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
 $filter = [
     // 'index' => ['$gte' => 2],
     // 'name' => 'cry',
-
+    // 'name' => ['$in' => ['cry', 'sleep']],
+    // 'name.firstname' => ['$in' => ['cry', 'sleep']],
+    // 'name.firstname' => ['$all' => ['cry', 'sleep']],
+    // '$or' => [['name' => 'cry'], ['index' => 1]],
+    // 'E-Mail' => ['$slice' => 2],
+    // 'E-Mail' => ['$slice' => -2],
+    // 'E-Mail' => ['$slice' => [1,2]],
+    // 'Hobby' => ['$exists' => false],
+    // 'First Name' => new MongoRegex('/^Je/i')
 ];
 $options = [
     // 'projection' => ['_id' => 0],
     'sort' => ['index' => 1],
-
 ];
 
 $query = new MongoDB\Driver\Query($filter, $options);
 $cursor = $manager->executeQuery('todo.list', $query);
+
+// $cursor->sort(['Age' => 1]);
+// $cursor->skip(1);
+// $cursor->limit(1);
+// $cursor->count();
+// $cursor->hint(['index' => -1]);
 
 foreach ($cursor as $document) {
     print_r(' ' . $document->index . ' ' . $document->name . ' ' . '</br>');
